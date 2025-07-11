@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Registration</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(to right, #c2e9fb, #a1c4fd);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    form {
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    table {
+      width: 100%;
+    }
+
+    td {
+      padding: 10px 5px;
+    }
+
+    input[type="text"], input[type="email"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    input[type="radio"] {
+      margin-right: 5px;
+    }
+
+    .submit-btn {
+      background-color: #00bcd4;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      width: 100%;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: transform 0.2s ease;
+    }
+
+    .submit-btn:hover {
+      transform: scale(1.03);
+    }
+
+    #output table {
+      margin-top: 20px;
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 800px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    #output td, #output th {
+      border: 1px solid #333;
+      padding: 10px;
+      text-align: center;
+      background-color: #fff;
+    }
+
+    .delete-btn {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background-color: #d32f2f;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @media (max-width: 600px) {
+      form, #output table {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Student Registration Form</h1>
+
+  <form>
+    <table>
+      <tr>
+        <td><label for="name">Name</label></td>
+        <td><input id="name" type="text" required></td>
+      </tr>
+      <tr>
+        <td><label for="age">Age</label></td>
+        <td><input id="age" type="text" required></td>
+      </tr>
+      <tr>
+        <td><label>Gender</label></td>
+        <td>
+          <input type="radio" name="gender" value="Male"> Male
+          <input type="radio" name="gender" value="Female"> Female
+        </td>
+      </tr>
+      <tr>
+        <td><label for="course">Course</label></td>
+        <td><input id="course" type="text" required></td>
+      </tr>
+      <tr>
+        <td><label for="email">E-mail</label></td>
+        <td><input id="email" type="email" required></td>
+      </tr>
+    </table>
+    <button class="submit-btn" onclick="submitbtn(event)">Submit</button>
+  </form>
+
+  <div id="output"></div>
+
+  <script>
+    function submitbtn(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const age = document.getElementById("age").value.trim();
+      const course = document.getElementById("course").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const genderRadio = document.querySelector('input[name="gender"]:checked');
+      const gender = genderRadio ? genderRadio.value : "";
+
+      if (!name || !age || !gender || !course || !email) {
+        alert("Please fill all fields");
+        return;
+      }
+
+      const table = document.createElement("table");
+      table.innerHTML = `
+        <tr>
+          <td>${name}</td>
+          <td>${age}</td>
+          <td>${gender}</td>
+          <td>${course}</td>
+          <td>${email}</td>
+          <td><button class="delete-btn" onclick="this.closest('table').remove()">Delete</button></td>
+        </tr>
+      `;
+
+      document.getElementById("output").appendChild(table);
+
+      // Reset fields
+      document.getElementById("name").value = "";
+      document.getElementById("age").value = "";
+      document.getElementById("course").value = "";
+      document.getElementById("email").value = "";
+      if (genderRadio) genderRadio.checked = false;
+    }
+  </script>
+
+</body>
+</html>
